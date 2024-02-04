@@ -1,0 +1,99 @@
+<section class="bg-warning padding-y-sm rounded">
+    <div class="container">
+
+        <ol class="breadcrumb ondark mb-0">
+            <li class="breadcrumb-item">
+                <a routerLink="/products">Home</a>
+            </li>
+            <li class="breadcrumb-item">
+                <a routerLink="/products">Product</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">
+                Richtan Hero
+            </li>
+        </ol>
+    </div>
+</section>
+
+<section class="padding-y">
+    <div class="container">
+        <div class="row">
+            <aside class="col-lg-4">
+                <img class="rounded" [src]="product?.image" style="width: 10rem;" alt="clothes"
+                onerror="this.onerror = null;this.src='assets/images/ImageNotFound.png'; imgNotFounded=true">
+            </aside>
+            <main class="col-lg-6">
+                <article class="ps-lg-3">
+                    <h4 class="title text-dark">
+                        {{product?.title }}
+
+                    </h4>
+                    <div class="rating-wrap my-3">
+                        <ul class="rating-stars">
+                            <li style="width:80%" class="stars-active">
+                                <img src="assets/images/stars-active.svg" alt="">
+                            </li>
+                            <li>
+                                <img src="assets/images/starts-disable.svg" alt="">
+                            </li>
+                        </ul>
+                        <b class="label-rating text-warning"> 4.5</b>
+                        <i class="dot"></i>
+                        <span class="label-rating text-muted">
+                            <i class="fa fa-shopping-basket"></i> 154 orders
+                        </span>
+                        <i class="dot"></i>
+                        <span class="label-rating text-success">In stock</span>
+                    </div>
+                    <div class="mb-3">
+                        <span class="price h5">${{product?.price}}</span>
+                    </div>
+                    <p>
+                        {{product?.description || loremText }}
+                    </p>
+                    <hr>
+
+                    <div class="row mb-4">
+                        <div class="col-md-4 col-6 mb-3" *ngIf="productInCartList">
+                            <label class="form-label d-block">Quantity</label>
+                            <div class="input-group input-spinner">
+                                <div class="quantity-selector">
+                                    <button type="button" class="btn  btn-quantity"
+                                        (click)="updateCartItemQuantity(quantity , product  , '-')"
+                                        [disabled]=" quantity == 1">
+                                        <span>-</span>
+                                    </button>
+                                    <div class="quantity-number">{{quantity}}</div>
+                                    <button type="button" class="btn btn-quantity"
+                                        (click)="updateCartItemQuantity(quantity! , product  , '+')">
+                                        <span>+</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div> 
+                    </div>
+
+                    <a href="#" class="btn  btn-warning me-2"
+                        (click)="$event.preventDefault(); addProductToCart(product)">
+                        <i class="me-1 fa fa-shopping-basket"></i>
+                        {{productInCartList ? 'Added to cart':'Add to cart'}}
+                    </a>
+                </article>
+            </main>
+        </div>
+
+        <div class="row my-5 position-relative"> 
+            <div class="title text-md-center mb-2">
+                <span>best match</span>
+                <h4 class="text-dark">Related products</h4>
+            </div>
+            <owl-carousel-o [options]="slider3Settings" #myCarousel>
+                <ng-container class="col-md-2 col-6" *ngFor="let item of categoryProducts">
+                    <ng-template carouselSlide [id]="item.id">
+                        <app-product [product]="item"></app-product>
+                    </ng-template>
+                </ng-container>
+            </owl-carousel-o>
+        </div>
+    </div>
+</section> 
